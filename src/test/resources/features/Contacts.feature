@@ -86,7 +86,6 @@ Feature: Feature to test Contacts functionality.
     And I get contact
     Then contact "tags" should be "empty"
 
-  @smoke
   Scenario: Add score to contact using email ID
     Given I create the contact with following details
       |first_name|last_name|email            |
