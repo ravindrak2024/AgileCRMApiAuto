@@ -43,5 +43,12 @@ dependencies {
 }
 
 test {
-    useJUnitPlatform()
+    useJUnitPlatform(){
+        Map<String,Object> systemProps=new HashMap<>();
+        systemProps.put("env",System.getProperty("env"))
+        systemProps.put("cucumber.filter.tags",System.getProperty("tags"))
+        systemProps.put("cucumber.features",System.getProperty("features"))
+        systemProperties(systemProps);
+
+    }
 }

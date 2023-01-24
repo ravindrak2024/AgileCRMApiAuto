@@ -1,18 +1,20 @@
 package com.agilecrm.stepdefs;
 
-import com.agilecrm.clients.BaseClient;
 import com.agilecrm.clients.ContactClient;
+import com.agilecrm.config.ContactsApi;
+import com.agilecrm.config.Environment;
 import com.agilecrm.config.EnvironmentConfig;
-import com.agilecrm.core.Command;
 import com.agilecrm.core.HttpMethod;
 import com.agilecrm.entity.common.Contact;
 import com.agilecrm.entity.common.Property;
 import com.agilecrm.entity.response.ContactListResponsePayload;
+import com.agilecrm.utilities.LogInitilizer;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,13 +31,20 @@ import java.util.stream.Collectors;
 public class ContactsStepsDef {
 
   Map<String,Object> responses=new HashMap<>();
+  Logger log= LogInitilizer.getLogger();
 
   @Autowired
   @Qualifier("contactClientImpl")
   ContactClient contactClient;
-          //=new ContactClientImpl();
+
   Contact lastAccessedProperty;
   ContactListResponsePayload allContacts;
+
+  @Autowired
+  private Environment environment;
+
+  @Autowired
+  private ContactsApi contactsApi;
 
   @When("I create the contact with following details")
   public void iCreateTheContactWithFollowingDetails(List<Map<String,String>> contactDetails) {
@@ -125,14 +134,16 @@ public class ContactsStepsDef {
     headers.put("Content-Type","application/json");
 
 
-    Command command= new Command.CommandBuilder(Contact.class)
+
+    /*Command command= new Command.CommandBuilder(Contact.class)
             .withBasePath(BaseClient.contactProp.getProperty("CreateContact"))
             .withMethod(HttpMethod.POST)
             .withBody(contact)
             .withHeaders(headers)
-            .build();
+            .build();*/
 
-    Response response=command.executeAndGetResponse();
+    Response response=contactClient.executeRaw(HttpMethod.POST,contact,contactsApi.getCreateContact(),headers);
+            //command.executeAndGetResponse();
     responses.put("createContact",response);
 
   }

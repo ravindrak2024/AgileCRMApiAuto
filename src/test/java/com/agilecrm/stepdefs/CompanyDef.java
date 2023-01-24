@@ -2,11 +2,12 @@ package com.agilecrm.stepdefs;
 
 import com.agilecrm.clients.CompanyClient;
 import com.agilecrm.entity.common.Company;
-import com.agilecrm.entity.common.Contact;
 import com.agilecrm.entity.common.Property;
 import com.agilecrm.entity.response.CompanyListResponsePayload;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class CompanyDef {
 
   @Autowired
   CompanyClient companyClient;
+
+  private Company recentCompany;
 
   @Given("clean all company")
   public void cleanAllCompany() {
@@ -50,8 +53,20 @@ public class CompanyDef {
       company.setTags(Arrays.asList("IT Solutions", "Software Industry"));
 
       Company c = companyClient.createCompany(company);
+      recentCompany=c;
       System.out.println(c);
 
     }
+  }
+
+  @Then("I get created company")
+  public void iGetCreatedCompany() {
+    recentCompany=companyClient.getCompanyWithId(String.valueOf(recentCompany.getId()));
+  }
+
+  @Then("company should be created with name {string}")
+  public void companyShouldBeCreatedWithName(String cname) {
+    Property property=recentCompany.getProperties().stream().filter(data -> data.getName().equals("name")).collect(Collectors.toList()).get(0);
+    Assert.assertEquals(cname,property.getValue());
   }
 }

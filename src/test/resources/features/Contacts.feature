@@ -10,7 +10,7 @@ Feature: Feature to test Contacts functionality.
     Then user should be created with first_name "Rahul"
     And owner email should be "ravikadagoudar@yopmail.com"
 
-
+    @smokex
   Scenario Outline: Check create contact with invalid details
     When I create the invalid contact with below details
       |first_name |last_name    |email            |
@@ -32,7 +32,6 @@ Feature: Feature to test Contacts functionality.
     Then I update "first_name" of user to "rakesh"
     And I get user and check "first_name" is "rakesh"
 
-
   Scenario: Check update contact lead score with valid details
     When I create the contact with following details
       |first_name|last_name|email            |
@@ -40,7 +39,6 @@ Feature: Feature to test Contacts functionality.
     Then user should be created with first_name "Rahul"
     And I update "lead_score" of contact with value 40
     Then user's lead_score should be 40
-
 
   Scenario: Check delete tags of contact
     When I create the contact with following details
@@ -50,7 +48,6 @@ Feature: Feature to test Contacts functionality.
     And I delete "tags" of contact
     Then I get contact
     And contact "tags" should be "empty"
-
 
   Scenario: Check multiple contact create and validate list of contacts
     When I create the contact with following details
@@ -75,8 +72,6 @@ Feature: Feature to test Contacts functionality.
     When I add tags "selenium,automation" for contact with email "rahul@yopmail.com"
     And I get contact
     Then contact "tags" should contain "selenium,automation"
-
-
 
   Scenario: Delete tags to a contact based on email id
     Given I create the contact with following details

@@ -9,4 +9,7 @@ Feature: Company related scenario
     When I create company with below details
       |type   |cname     |url                        |email               |
       |mnc    |persistent|http://www.persistent.co.in|ravi.per@yopmail.com|
+    And I get created company
+    Then company should be created with name "persistent"
+
 

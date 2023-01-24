@@ -16,10 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class CompanyClientImpl implements CompanyClient{
+public class CompanyClientImpl extends BaseClient implements CompanyClient{
 
   @Autowired
   CompanyApi companyApi;
+
 
   @Override
   public Company createCompany(Company company) {
@@ -28,7 +29,9 @@ public class CompanyClientImpl implements CompanyClient{
     headers.put("Content-Type","application/json");
 
     Command command= new Command.CommandBuilder(Company.class)
-            .withBasePath(companyApi.getCreateCompany())
+            .withBaseURI(environment.getBaseUri())
+            .withBasicAuthScheme(getBasicAuthScheme())
+            .withBasePath(env+companyApi.getCreateCompany())
             .withHeaders(headers)
             .withBody(company)
             .withMethod(HttpMethod.POST)
@@ -43,7 +46,9 @@ public class CompanyClientImpl implements CompanyClient{
     headers.put("Accept","application/json");
 //    headers.put("Content-Type","application/json");
     Command command= new Command.CommandBuilder(CompanyListResponsePayload.class)
-            .withBasePath(companyApi.getListOfCompany())
+            .withBaseURI(environment.getBaseUri())
+            .withBasicAuthScheme(getBasicAuthScheme())
+            .withBasePath(env+companyApi.getListOfCompany())
             .withHeaders(headers)
             .withMethod(HttpMethod.POST)
             .build();
@@ -53,11 +58,35 @@ public class CompanyClientImpl implements CompanyClient{
 
   @Override
   public void deleteCompany(String id) {
-    Command command= new Command.CommandBuilder(Contact.class)
-            .withBasePath(companyApi.getDeleteCompany().replace("{id}",id))
+    Command command= new Command.CommandBuilder(Company.class)
+            .withBaseURI(environment.getBaseUri())
+            .withBasicAuthScheme(getBasicAuthScheme())
+            .withBasePath(env+companyApi.getDeleteCompany().replace("{id}",id))
             .withMethod(HttpMethod.DELETE)
             .build();
     Response response=command.executeAndGetResponse();
     Assert.assertEquals(response.getStatusCode(),204);
+  }
+
+  @Override
+  public Company getCompanyWithId(String id) {
+    Map<String,String> headers=new HashMap<>();
+    headers.put("Accept","application/json");
+    headers.put("Content-Type","application/json");
+
+
+    Command command= new Command.CommandBuilder(Company.class)
+            .withBaseURI(environment.getBaseUri())
+            .withBasicAuthScheme(getBasicAuthScheme())
+            .withBasePath(env+companyApi.getCompany().replace("{id}",id))
+            .withHeaders(headers)
+            .withMethod(HttpMethod.GET)
+            .build();
+    return (Company) command.execute();
+  }
+
+  @Override
+  public Response executeRaw(HttpMethod httpMethod, Object body, String basePath, Map<String, String> headers) {
+    return super.executeRaw(httpMethod,body,basePath,headers);
   }
 }

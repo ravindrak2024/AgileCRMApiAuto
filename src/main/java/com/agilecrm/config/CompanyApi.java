@@ -16,4 +16,8 @@ public class CompanyApi {
   @Value("${DeleteCompany}")
   private String deleteCompany;
 
+  @Value("${GetCompany}")
+  private String company;
+
+
 }

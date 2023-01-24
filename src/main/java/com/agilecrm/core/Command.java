@@ -1,6 +1,5 @@
 package com.agilecrm.core;
 
-import com.agilecrm.clients.BaseClient;
 import io.restassured.authentication.BasicAuthScheme;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
@@ -10,7 +9,9 @@ import com.agilecrm.utilities.LogInitilizer;
 
 import java.util.Map;
 
+
 public class Command<T> {
+
 
   Logger log= LogInitilizer.getLogger();
 
@@ -32,11 +33,6 @@ public class Command<T> {
     this.requestSpecBuilder = builder.requestSpecBuilder;
     this.method=builder.method;
     this.isResponseList=builder.isResponseList;
-
-    BasicAuthScheme basicAuthScheme=new BasicAuthScheme();
-    basicAuthScheme.setUserName(BaseClient.commonConfig.getProperty("username"));
-    basicAuthScheme.setPassword(BaseClient.commonConfig.getProperty("password"));
-    requestSpecBuilder.setAuth(basicAuthScheme);
 
     jsonMapper=builder.jsonMapper;
   }
@@ -64,7 +60,6 @@ public class Command<T> {
 
     public CommandBuilder(Class<T> returnType){
       requestSpecBuilder=new RequestSpecBuilder();
-      requestSpecBuilder.setBaseUri(BaseClient.commonConfig.getProperty("baseUri"));
       this.returnType=returnType;
       jsonMapper=new JsonMapper(returnType);
     }
@@ -72,6 +67,11 @@ public class Command<T> {
 
     public CommandBuilder<T> withBasePath(String basePath){
       requestSpecBuilder.setBasePath(basePath);
+      return this;
+    }
+
+    public CommandBuilder<T> withBasicAuthScheme(BasicAuthScheme basicAuthScheme){
+      requestSpecBuilder.setAuth(basicAuthScheme);
       return this;
     }
 
