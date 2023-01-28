@@ -1,11 +1,15 @@
 node {
-    checkout scm
-    def testImage = docker.build("test-image", ".")
-
-
-
-
-    testImage.inside("-u root --entrypoint ''") {
-        sh './run_workflow_tests.sh --testenv dev --features src/test/resources/features/Contacts.feature --tags @smokex'
+    cleanWs()
+    def testImage
+    stage("Checkout SCM"){
+        checkout scm
+    }
+    stage("Build Test Image"){
+        testImage = docker.build("test-image", ".")
+    }
+    stage("Run Tests"){
+        testImage.inside("-u root --entrypoint ''") {
+            sh './run_workflow_tests.sh --testenv dev --features src/test/resources/features/Contacts.feature --tags @smokex'
+        }
     }
 }
