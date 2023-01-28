@@ -18,7 +18,7 @@ node {
 
     cleanWs()
     def testImage
-    def cucumberTags=workflowTestTags.replace(',',' ');
+    def cucumberTags=params.workflowTestTags.replace(',',' ');
     stage("Checkout SCM"){
         checkout scm
     }
