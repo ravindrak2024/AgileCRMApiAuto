@@ -1,4 +1,8 @@
 pipeline {
+environment {
+    registryCredential = 'a476d213-d1ba-4d42-9092-5ee369828cc0'
+    dockerFile = 'src/test/Dockerfile'
+}
 agent any
     parameters {
              choice(
