@@ -16,10 +16,9 @@ agent any
     }
 
     stage('Build and Run'){
-    agent { dockerfile true }
     		steps{
-               sh """./run_workflow_tests.sh --testenv dev --features src/test/resources/features/Contacts.feature --tags @smokex"""
-    		}
+               def image = docker.build("-f Dockerfile.local", "--no-cache", "-t jenkinstestImage")
+           }
     }
 
 
