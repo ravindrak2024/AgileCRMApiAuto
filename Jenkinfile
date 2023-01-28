@@ -17,7 +17,7 @@ agent any
 
    stage('Build and Run'){
    		steps{
-                def testImage = docker.build("test-image", ".")
+               step{ def testImage = docker.build("test-image", ".")}
 
              // sh """./run_workflow_tests.sh --testenv dev --features src/test/resources/features/Contacts.feature --tags @smokex"""
    		}
