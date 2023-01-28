@@ -3,6 +3,6 @@ node {
     def testImage = docker.build("test-image", ".")
 
     testImage.inside {
-     //   sh './run_workflow_tests.sh --testenv dev --features src/test/resources/features/Contacts.feature --tags @smokex'
+        sh './run_workflow_tests.sh --testenv dev --features src/test/resources/features/Contacts.feature --tags @smokex'
     }
 }
