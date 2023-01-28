@@ -7,7 +7,7 @@ def defaultTags = availableTestTags
 properties([
     parameters([
         choice(choices: testEnvironments.join('\n'), defaultValue: 'dev', description: 'select target environment to run tests', name: 'targetEnvironment'),
-        extendedChoice(defaultValue: defaultTags.join(' '), description: 'Which test tags or suites are currently available for running tests against', multiSelectDelimiter: ',', name: 'workflowTestTags', type: 'PT_MULTI_SELECT', value: availableTestTags.join(','), visibleItemCount: 10),
+        extendedChoice(defaultValue: defaultTags.join(','), description: 'Which test tags or suites are currently available for running tests against', multiSelectDelimiter: ',', name: 'workflowTestTags', type: 'PT_MULTI_SELECT', value: availableTestTags.join(','), visibleItemCount: 10),
 
     ])
 ])
@@ -18,7 +18,7 @@ node {
 
     cleanWs()
     def testImage
-
+    def cucumberTags=workflowTestTags.replace(',',' ');
     stage("Checkout SCM"){
         checkout scm
     }
@@ -27,7 +27,7 @@ node {
     }
     stage("Run Tests"){
         testImage.inside("-u root --entrypoint ''") {
-            sh './run_workflow_tests.sh --testenv ${targetEnvironment} --tags ${workflowTestTags}'
+            sh './run_workflow_tests.sh --testenv ${targetEnvironment} --tags ${cucumberTags}'
         }
     }
 }
