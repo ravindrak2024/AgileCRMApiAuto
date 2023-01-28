@@ -10,4 +10,4 @@ WORKDIR /code
 
 RUN chmod +x run_workflow_tests.sh
 
-ENTRYPOINT ["/code/run_workflow_tests.sh" ]
+#ENTRYPOINT ["/code/run_workflow_tests.sh" ]
