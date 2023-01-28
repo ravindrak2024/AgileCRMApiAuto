@@ -1,5 +1,5 @@
 pipeline {
-agent { dockerfile true }
+agent any
     parameters {
              choice(
                 name: 'ENVIRONMENT',
@@ -13,6 +13,13 @@ agent { dockerfile true }
     			     credentialsId: 'c3c78eae-4c5b-499e-9d91-5a397d8598b9',
                      url: 'https://github.com/ravindrab5/AgileCRMApiAuto.git'
 		}
+    }
+
+    stage('Build and Run'){
+    agent { dockerfile true }
+    		steps{
+                ./run_workflow_tests.sh --testenv dev --features src/test/resources/features/Contacts.feature --tags @smokex
+    		}
     }
 
 
