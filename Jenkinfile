@@ -1,5 +1,5 @@
 pipeline {
-agent { dockerfile true }
+agent { docker { dockerfile true }}
     parameters {
              choice(
                 name: 'ENVIRONMENT',
