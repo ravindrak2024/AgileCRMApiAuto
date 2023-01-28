@@ -6,7 +6,7 @@ def defaultTags = availableTestTags
 
 properties([
     parameters([
-        choice(choices: environments.join('\n'), defaultValue: 'dev', description: 'select target environment to run tests', name: 'targetEnvironment'),
+        choice(choices: testEnvironments.join('\n'), defaultValue: 'dev', description: 'select target environment to run tests', name: 'targetEnvironment'),
         extendedChoice(defaultValue: defaultTags.join(','), description: 'Which test tags or suites are currently available for running tests against', multiSelectDelimiter: ',', name: 'workflowTestTags', type: 'PT_MULTI_SELECT', value: availableTestTags.join(','), visibleItemCount: 10),
 
     ])
