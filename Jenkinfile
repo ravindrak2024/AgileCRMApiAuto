@@ -2,7 +2,10 @@ node {
     checkout scm
     def testImage = docker.build("test-image", ".")
 
-    testImage.inside {
+
+
+
+    testImage.inside(-u root --entrypoint '') {
         sh './run_workflow_tests.sh --testenv dev --features src/test/resources/features/Contacts.feature --tags @smokex'
     }
 }
