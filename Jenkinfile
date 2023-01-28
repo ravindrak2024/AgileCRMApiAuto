@@ -1,0 +1,20 @@
+pipeline {
+agent any
+    parameters {
+             choice(
+                name: 'ENVIRONMENT',
+                choices:"localhost\ndev\nfqa",
+                description: "Environment of the tests" )
+     }
+   stages {
+	stage('Clone'){
+		steps{
+		git branch: 'master',
+    			     credentialsId: 'c3c78eae-4c5b-499e-9d91-5a397d8598b9',
+                     url: 'https://github.com/ravindrab5/AgileCRMApiAuto.git'
+		}
+    }
+
+
+}
+}

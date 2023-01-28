@@ -1,0 +1,53 @@
+pipeline {
+agent any
+    parameters {
+             choice(
+                name: 'ENVIRONMENT',
+                choices:"localhost\ndev\nfqa",
+                description: "Environment of the tests" )
+     }
+   stages {
+	stage('Clone'){
+		steps{
+		git branch: 'master',
+    			     credentialsId: 'c3c78eae-4c5b-499e-9d91-5a397d8598b9',
+                     url: 'https://github.com/ravindrab5/AgileCRMApiAuto.git'
+		}
+    }
+
+   stage('Build'){
+			steps{
+			script{
+                bat 'gradlew shadowJar'
+			}
+			}
+  }
+stage('Run Tests'){
+			steps{
+			script{
+            def data=readFile(file: 'tags.txt')
+            bat 'java -jar ./build/libs/BDDSelenium-1.0-SNAPSHOT-all.jar -env ${ENVIRONMENT} -tags '+data
+
+
+            }
+        	}
+  }
+
+}
+post {
+  always {
+    junit "**/TEST-com.ideas.chimps.bddselenium.tests.TestRunner.xml"
+
+    publishHTML target: [
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: true,
+                reportDir: 'Results',
+                reportFiles: 'result.html',
+                reportName: 'HTML Report'
+              ]
+
+    cucumber fileIncludePattern: '**/target/cucumber-reports/CucumberTestReport.json', sortingMethod: 'ALPHABETICAL'
+  }
+}
+}
