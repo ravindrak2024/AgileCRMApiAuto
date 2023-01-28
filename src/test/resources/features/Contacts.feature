@@ -3,6 +3,7 @@ Feature: Feature to test Contacts functionality.
   Background:
     Given clean all contacts
 
+    @smoke
   Scenario: Check create contact with valid details
     When I create the contact with following details
       |first_name|last_name|email            |
@@ -10,7 +11,7 @@ Feature: Feature to test Contacts functionality.
     Then user should be created with first_name "Rahul"
     And owner email should be "ravikadagoudar@yopmail.com"
 
-    @smokex
+
   Scenario Outline: Check create contact with invalid details
     When I create the invalid contact with below details
       |first_name |last_name    |email            |
@@ -21,6 +22,7 @@ Feature: Feature to test Contacts functionality.
     |fname | lname | email_add        | status_codes|
     |      |       |                  | 500         |
 
+  @smoke
   Scenario: Check update contact with valid details
     When I create the contact with following details
       |first_name|last_name|email            |
@@ -32,6 +34,7 @@ Feature: Feature to test Contacts functionality.
     Then I update "first_name" of user to "rakesh"
     And I get user and check "first_name" is "rakesh"
 
+  @workflow
   Scenario: Check update contact lead score with valid details
     When I create the contact with following details
       |first_name|last_name|email            |
@@ -40,6 +43,7 @@ Feature: Feature to test Contacts functionality.
     And I update "lead_score" of contact with value 40
     Then user's lead_score should be 40
 
+  @workflow
   Scenario: Check delete tags of contact
     When I create the contact with following details
       |first_name|last_name|email            |

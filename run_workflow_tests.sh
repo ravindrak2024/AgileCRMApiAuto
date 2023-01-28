@@ -43,10 +43,11 @@ while [[ $# -gt 0 ]]; do
       tags+=""
     fi
     while [ -n "${2}" ] && [ "${2:0:2}" != "--" ]; do
-      tags+="${2},"
+      tags+="@${2} or "
       shift
     done
-    tags=${tags%,}
+
+    tags=${tags%or*}
     shift
     ;;
   *)
@@ -68,4 +69,4 @@ else
   echo "TAGS       : <none specified>"
 fi
 
-./gradlew test -Denv="${test_env}" -Dfeatures="${features}" -Dtags="${tags}"
+./gradlew clean test -Denv="${test_env}" -Dfeatures="${features}" -Dtags="${tags}"
