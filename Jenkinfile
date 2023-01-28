@@ -5,7 +5,7 @@ node {
 
 
 
-    testImage.inside(-u root --entrypoint '') {
+    testImage.inside("-u root --entrypoint ''") {
         sh './run_workflow_tests.sh --testenv dev --features src/test/resources/features/Contacts.feature --tags @smokex'
     }
 }
