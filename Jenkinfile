@@ -1,5 +1,5 @@
 pipeline {
-agent { docker { dockerfile true }}
+agent any
     parameters {
              choice(
                 name: 'ENVIRONMENT',
@@ -8,6 +8,7 @@ agent { docker { dockerfile true }}
      }
    stages {
 	stage('Clone'){
+		agent { docker { dockerfile true }}
 		steps{
 		git branch: 'master',
     			     credentialsId: 'c3c78eae-4c5b-499e-9d91-5a397d8598b9',
