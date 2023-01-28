@@ -4,7 +4,7 @@ USER root
 
 RUN mkdir "code"
 
-COPY . /code
+COPY src/test /code
 
 WORKDIR /code
 
