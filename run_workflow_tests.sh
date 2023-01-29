@@ -13,6 +13,8 @@ features=""
 tags=""
 test_env=""
 debug=""
+temptags=""
+
 #chromeDriverOverride=""
 
 while [[ $# -gt 0 ]]; do
@@ -41,13 +43,17 @@ while [[ $# -gt 0 ]]; do
   --tags)
     if [ -n "${2}" ] && [ "${2:0:2}" != "--" ]; then
       tags+=""
-    fi
-    while [ -n "${2}" ] && [ "${2:0:2}" != "--" ]; do
-      tags+="@${2} or "
+      temptags="${2}"
+      temptags=${temptags/','/' '}
+      IFS=" "
+      read -ra arr <<< "$temptags"
+      for i in "${arr[@]}"; do
+        tags+="@$i or "
+      done
+      echo "$tags"
+      tags=${tags%or*}
       shift
-    done
-
-    tags=${tags%or*}
+    fi
     shift
     ;;
   *)
