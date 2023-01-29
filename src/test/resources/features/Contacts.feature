@@ -1,3 +1,4 @@
+@contacts
 Feature: Feature to test Contacts functionality.
 
   Background:
@@ -10,7 +11,6 @@ Feature: Feature to test Contacts functionality.
       |Rahul     |mane     |rahul@yopmail.com|
     Then user should be created with first_name "Rahul"
     And owner email should be "ravikadagoudar@yopmail.com"
-
 
   Scenario Outline: Check create contact with invalid details
     When I create the invalid contact with below details

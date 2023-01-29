@@ -1,3 +1,4 @@
+@company
 Feature: Company related scenario
 
   Background:

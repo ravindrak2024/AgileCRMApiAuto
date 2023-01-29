@@ -1,7 +1,7 @@
 #!groovy
 
 def testEnvironments = ['dev', 'fqa', 'staging', 'prod']
-def availableTestTags = ['smoke','workflow']
+def availableTestTags = ['smoke','workflow','contacts','company']
 def defaultTags = availableTestTags
 
 properties([
