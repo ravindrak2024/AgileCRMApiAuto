@@ -29,4 +29,16 @@ node {
             sh './run_workflow_tests.sh --testenv ${targetEnvironment} --tags ${workflowTestTags}'
         }
     }
-}
+    stage('Generate HTML report') {
+            cucumber buildStatus: 'UNSTABLE',
+                    reportTitle: 'Report',
+                    fileIncludePattern: '**/*.json',
+                    trendsLimit: 10,
+                    classifications: [
+                        [
+                            'key': 'Browser',
+                            'value': 'Chrome'
+                        ]
+                    ]
+        }
+    }
