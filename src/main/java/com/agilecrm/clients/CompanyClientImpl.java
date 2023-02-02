@@ -89,4 +89,22 @@ public class CompanyClientImpl extends BaseClient implements CompanyClient{
   public Response executeRaw(HttpMethod httpMethod, Object body, String basePath, Map<String, String> headers) {
     return super.executeRaw(httpMethod,body,basePath,headers);
   }
+
+  @Override
+  public Company updateCompany(Company company) {
+    Map<String,String> headers=new HashMap<>();
+    headers.put("Accept","application/json");
+    headers.put("Content-Type","application/json");
+
+    Command command= new Command.CommandBuilder(Company.class)
+            .withBaseURI(environment.getBaseUri())
+            .withBasicAuthScheme(getBasicAuthScheme())
+            .withBasePath(env+companyApi.getUpdateCompany())
+            .withHeaders(headers)
+            .withBody(company)
+            .withMethod(HttpMethod.PUT)
+            .build();
+
+    return (Company) command.execute();
+  }
 }

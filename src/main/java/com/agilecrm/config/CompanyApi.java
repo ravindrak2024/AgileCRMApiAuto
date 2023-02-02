@@ -19,5 +19,8 @@ public class CompanyApi {
   @Value("${GetCompany}")
   private String company;
 
+  @Value("${UpdateCompany}")
+  private String updateCompany;
+
 
 }

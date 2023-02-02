@@ -4,6 +4,7 @@ import com.agilecrm.clients.CompanyClient;
 import com.agilecrm.entity.common.Company;
 import com.agilecrm.entity.common.Property;
 import com.agilecrm.entity.response.CompanyListResponsePayload;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -59,7 +60,7 @@ public class CompanyDef {
     }
   }
 
-  @Then("I get created company")
+  @Then("I get created/updated company")
   public void iGetCreatedCompany() {
     recentCompany=companyClient.getCompanyWithId(String.valueOf(recentCompany.getId()));
   }
@@ -68,5 +69,24 @@ public class CompanyDef {
   public void companyShouldBeCreatedWithName(String cname) {
     Property property=recentCompany.getProperties().stream().filter(data -> data.getName().equals("name")).collect(Collectors.toList()).get(0);
     Assert.assertEquals(cname,property.getValue());
+  }
+
+  @And("I update {string} of company as {string}")
+  public void iUpdateOfCompanyAs(String field, String value) {
+    Company c = recentCompany;
+    Property property=c.getProperties().stream().filter(prop->prop.getName().equals(field)).collect(Collectors.toList()).get(0);
+    c.getProperties().remove(property);
+    property.setValue(value);
+    c.getProperties().add(property);
+
+    Company response=companyClient.updateCompany(c);
+    System.out.println();
+
+  }
+
+  @Then("company should be updated with {string} {string}")
+  public void companyShouldBeUpdatedWith(String field, String value) {
+    String actualValue=recentCompany.getProperties().stream().filter(prop->prop.getName().equals(field)).collect(Collectors.toList()).get(0).getValue();
+    Assert.assertEquals(value,actualValue);
   }
 }

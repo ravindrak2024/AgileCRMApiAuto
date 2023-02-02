@@ -231,7 +231,6 @@ public class ContactsStepsDef {
     ContactListResponsePayload contacts = contactClient.getAllContacts();
     contacts.getContacts().stream().map(Contact::getId).forEach( contact->
             contactClient.deleteContactId(String.valueOf(contact)));
-
   }
 
   @And("get all contacts")

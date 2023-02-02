@@ -18,5 +18,5 @@ public interface CompanyClient {
   public void deleteCompany(String id);
   public Company getCompanyWithId(String id);
   public Response executeRaw(HttpMethod httpMethod, Object body, String basePath, Map<String,String> headers);
-
+  public Company updateCompany(Company company);
 }
