@@ -22,3 +22,12 @@ docker run -it testimage --testenv dev
 
 With volume
 docker run -it -v `pwd`/reports:/code/reports testimage --testenv dev --tags @smokex
+
+
+Jenkins Start service
+
+brew services start jenkins-lts
+
+Jenkins 
+UN - admin
+Pass - Ravindra123
