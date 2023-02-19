@@ -24,6 +24,8 @@ public class CompanyDef {
 
   private Company recentCompany;
 
+  private CompanyListResponsePayload companyListResponsePayload;
+
   @Given("clean all company")
   public void cleanAllCompany() {
     CompanyListResponsePayload companyListResponsePayload=companyClient.getAllCompany();
@@ -88,5 +90,38 @@ public class CompanyDef {
   public void companyShouldBeUpdatedWith(String field, String value) {
     String actualValue=recentCompany.getProperties().stream().filter(prop->prop.getName().equals(field)).collect(Collectors.toList()).get(0).getValue();
     Assert.assertEquals(value,actualValue);
+  }
+
+  @And("I get all company")
+  public void iGetAllCompany() {
+    companyListResponsePayload=companyClient.getAllCompany();
+  }
+
+  @Then("all company {string} contain company with name {string}")
+  public void allCompanyShouldContainCompanyWithName(String shouldOrShouldnot,String cname) {
+    if(shouldOrShouldnot.equalsIgnoreCase("should")) {
+      List<Company> companies = companyListResponsePayload.getCompanies().stream().filter(company -> {
+        return company.getProperties().stream().anyMatch(dt -> dt.getValue().equalsIgnoreCase(cname));
+      }).collect(Collectors.toList());
+      Assert.assertTrue(companies.size()>0);
+    }else{
+      List<Company> companies = companyListResponsePayload.getCompanies().stream().filter(company -> {
+        return company.getProperties().stream().anyMatch(dt -> dt.getValue().equalsIgnoreCase(cname));
+      }).collect(Collectors.toList());
+      Assert.assertTrue(companies.size()==0);
+    }
+
+
+  }
+
+  @And("I delete a company with name {string}")
+  public void iDeleteACompanyWithName(String cname) {
+    iGetAllCompany();
+    List<Company> companies=companyListResponsePayload.getCompanies().stream().filter(company -> {
+      return company.getProperties().stream().anyMatch(dt->dt.getValue().equalsIgnoreCase(cname));
+    }).collect(Collectors.toList());
+
+    companyClient.deleteCompany(String.valueOf(companies.get(0).getId()));
+
   }
 }
