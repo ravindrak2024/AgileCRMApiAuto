@@ -9,7 +9,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class JsonMapper<T> {
   Logger log=LogInitilizer.getLogger();
@@ -68,4 +71,34 @@ public class JsonMapper<T> {
     }
     return payload;
   }
+
+  public T getDataFromFile(String fileName) {
+
+    InputStream input = JsonMapper.class.getResourceAsStream("/" + fileName);
+
+    Object obj = null;
+
+    try {
+      obj = objectMapper.readValue(input,returnType);
+    } catch (JsonParseException e) {
+      // TODO Auto-generated catch block
+      log.error("Error occured : "+e.getMessage());
+      e.printStackTrace();
+
+    } catch (JsonMappingException e) {
+      // TODO Auto-generated catch block
+      log.error("Error occured : "+e.getMessage());
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      log.error("Error occured : "+e.getMessage());
+      e.printStackTrace();
+    } catch(Exception e) {
+      // Need to write Exception
+      log.error("Error occured : "+e.getMessage());
+      e.printStackTrace();
+    }
+    return (T)obj;
+  }
+
 }

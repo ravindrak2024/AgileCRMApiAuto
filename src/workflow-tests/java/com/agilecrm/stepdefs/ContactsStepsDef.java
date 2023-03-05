@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@ContextConfiguration(classes = {EnvironmentConfig.class})
 public class ContactsStepsDef {
 
   Map<String,Object> responses=new HashMap<>();

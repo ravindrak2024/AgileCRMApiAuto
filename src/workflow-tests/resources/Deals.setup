@@ -1,0 +1,78 @@
+{
+	"contacts": [{
+		"tags": [
+			"Lead",
+			"Subject"
+		],
+		"tagsWithTime": [
+
+		],
+		"properties": [{
+				"type": "SYSTEM",
+				"name": "first_name",
+				"value": "Rahul"
+			},
+			{
+				"type": "SYSTEM",
+				"name": "last_name",
+				"value": "mane"
+			},
+			{
+				"type": "SYSTEM",
+				"name": "email",
+				"value": "rahul@yopmail.com"
+			}
+		],
+		"campaignStatus": [
+
+		],
+		"unsubscribeStatus": [
+
+		],
+		"emailBounceStatus": [
+
+		],
+		"browserId": [
+
+		],
+		"star_value": 10,
+		"lead_score": 20
+	}],
+	"companies": [{
+		"type": "COMPANY",
+		"star_value": 4,
+		"lead_score": 120,
+		"tags": [
+			"Permanent",
+			"India",
+			"Hongkong",
+			"Japan"
+		],
+		"properties": [{
+				"name": "Company Type",
+				"type": "CUSTOM",
+				"value": "MNC Inc"
+			},
+			{
+				"type": "SYSTEM",
+				"name": "name",
+				"value": "Capgemini"
+			},
+			{
+				"type": "SYSTEM",
+				"name": "url",
+				"value": "http://www.capgemini.com/"
+			},
+			{
+				"name": "email",
+				"value": "capgemini@yopmail.com.com",
+				"subtype": ""
+			},
+			{
+				"name": "address",
+				"value": "{\"address\":\"MS 35, 440 N Wolfe Road\",\"city\":\"Sunnyvale\",\"state\":\"CA\",\"zip\":\"94085\",\"country\":\"US\"}",
+				"subtype": "office"
+			}
+		]
+	}]
+}
