@@ -4,7 +4,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = {"src/test/resources/features"},
+        features = {"src/workflow-tests/resources/features"},
         glue = {"com/agilecrm/stepdefs"},
         plugin = {"pretty","json:reports/cucumber-reports/reports.json",
 

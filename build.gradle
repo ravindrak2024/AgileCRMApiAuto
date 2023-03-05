@@ -42,13 +42,41 @@ dependencies {
     implementation group: 'io.cucumber', name: 'cucumber-spring', version: '5.5.0'
 }
 
-test {
-    useJUnitPlatform(){
-        Map<String,Object> systemProps=new HashMap<>();
-        systemProps.put("env",System.getProperty("env"))
-        systemProps.put("cucumber.filter.tags",System.getProperty("tags"))
-        systemProps.put("cucumber.features",System.getProperty("features"))
-        systemProperties(systemProps);
+
+
+sourceSets {
+    workflowTests {
+        java.srcDir file("src/workflow-tests/java")
+        resources.srcDir file("src/workflow-tests/resources")
+    }
+}
+
+configurations {
+    workflowTestsImplementation.extendsFrom implementation
+    workflowTestsTestImplementation.extendsFrom testImplementation
+    workflowTestsRuntime.extendsFrom testRuntime
+    workflowTestsAnnotationProcessor.extendsFrom annotationProcessor
+    workflowTestsCompileOnly.extendsFrom compileOnly
+}
+
+/* Reference links
+https://www.baeldung.com/gradle-source-sets
+https://inspeerity.com/blog/separate-gradle-tasks-for-unit-and-integration-tests
+ */
+task workflowTests(type: Test) {
+    description = "Run integration tests"
+    group = "verification"
+
+    testClassesDirs = sourceSets.workflowTests.output.classesDirs
+    classpath = sourceSets.workflowTests.runtimeClasspath
+
+    Map<String,Object> systemProps=new HashMap<>();
+    systemProps.put("env",System.getProperty("env"))
+    systemProps.put("cucumber.filter.tags",System.getProperty("tags"))
+    systemProps.put("cucumber.features",System.getProperty("features"))
+    systemProperties(systemProps);
+    doFirst {
 
     }
 }
+

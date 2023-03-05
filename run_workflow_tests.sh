@@ -75,4 +75,4 @@ else
   echo "TAGS       : <none specified>"
 fi
 
-./gradlew clean test -Denv="${test_env}" -Dfeatures="${features}" -Dtags="${tags}"
+./gradlew clean workflowTests -Denv="${test_env}" -Dfeatures="${features}" -Dtags="${tags}"
