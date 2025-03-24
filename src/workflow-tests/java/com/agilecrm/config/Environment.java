@@ -11,7 +11,7 @@ public class Environment {
   @Value("${baseUri}")
   private String baseUri;
 
-  @Value("${username}")
+  @Value("${user}")
   private String username;
 
   @Value("${password}")

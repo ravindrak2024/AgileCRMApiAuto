@@ -10,7 +10,7 @@ Feature: Feature to test Contacts functionality.
       |first_name|last_name|email            |
       |Rahul     |mane     |rahul@yopmail.com|
     Then user should be created with first_name "Rahul"
-    And owner email should be "ravikadagoudar@yopmail.com"
+    And owner email should be "ravicrm2@yopmail.com"
 
   Scenario Outline: Check create contact with invalid details
     When I create the invalid contact with below details
@@ -28,7 +28,7 @@ Feature: Feature to test Contacts functionality.
       |first_name|last_name|email            |
       |Rahul     |mane     |rahul@yopmail.com|
     Then user should be created with first_name "Rahul"
-    And owner email should be "ravikadagoudar@yopmail.com"
+    And owner email should be "ravicrm2@yopmail.com"
     Then I update "email" of user to "rahul.mane@yopmail.com"
     And I get user and check "email" is "rahul.mane@yopmail.com"
     Then I update "first_name" of user to "rakesh"

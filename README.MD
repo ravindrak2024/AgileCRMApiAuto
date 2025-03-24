@@ -4,11 +4,11 @@ We can run the tests from command line with below commad.
 
 To run in debug mode 
 
-./gradlew clean test -Denv=dev -Dfeatures="src/test/resources/features/Company.feature" --debug-jvm
+./gradlew clean test -Denv=dev -Dfeatures="src/workflow-tests/resources/features/Company.feature" --debug-jvm
 
 Running the script using the run_workflow_test.sh 
 
-./run_workflow_tests.sh --testenv dev --features src/test/resources/features/Contacts.feature --tags @smokex
+./run_workflow_tests.sh --testenv dev --features src/workflow-tests/resources/features/Contacts.feature --tags @smokex
 
 With Docker 
 
